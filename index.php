@@ -635,7 +635,7 @@ LIMIT 6 ");
           </div>
 
           <!-- Form Title -->
-          <div class="row">
+          <div class="row" style="align-items: center; justify-content: center;">
             <div class="padd-15">
               <h3 class="contact-title">SEND ME AN EMAIL</h3>
               <h4 class="contact-sub-title">I'M VERY RESPONSIVE TO MESSAGES</h4>
