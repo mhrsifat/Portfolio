@@ -12,7 +12,7 @@ $pdo = $user->getConnection();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $limit = 10;
-$page  = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$page  = isset($_GET['pg']) && is_numeric($_GET['pg']) ? (int)$_GET['pg'] : 1;
 $offset = ($page - 1) * $limit;
 
 $totalStmt     = $pdo->query("SELECT COUNT(*) FROM message");
@@ -82,17 +82,17 @@ $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <ul class="pagination justify-content-center">
           <?php if ($page > 1): ?>
             <li class="page-item">
-              <a class="page-link" href="?page=<?= $page - 1 ?>">Previous</a>
+              <a class="page-link" href="?page=message&pg=<?= $page - 1 ?>">Previous</a>
             </li>
           <?php endif; ?>
           <?php for ($i = 1; $i <= $totalPages; $i++): ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-              <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+              <a class="page-link" href="?page=message&pg=<?= $i ?>"><?= $i ?></a>
             </li>
           <?php endfor; ?>
           <?php if ($page < $totalPages): ?>
             <li class="page-item">
-              <a class="page-link" href="?page=<?= $page + 1 ?>">Next</a>
+              <a class="page-link" href="?page=message&pg=<?= $page + 1 ?>">Next</a>
             </li>
           <?php endif; ?>
         </ul>
