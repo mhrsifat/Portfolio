@@ -1,10 +1,16 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 class Confi 
 {
-	private $host =  "localhost";
-	private $db_name = "portfolio";
-	private $username = "root";
-	private $password = "";
+	private $host =  $_ENV['DB_HOST'];
+	private $db_name = $_ENV['DB_NAME'];
+	private $username = $_ENV['DB_USER'];
+	private $password = $_ENV['DB_PASS'];
 
 	public $conn;
 	public $serverdown = false;

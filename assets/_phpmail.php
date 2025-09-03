@@ -3,7 +3,11 @@
 require_once __DIR__ . '/mailer/PHPMailer.php';
 require_once __DIR__ . '/mailer/SMTP.php';
 require_once __DIR__ . '/mailer/Exception.php';
-//require_once __DIR__ . '/_sendmail.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -11,19 +15,19 @@ class MyClass
 {
     public function sendMail($toEmail, $htmlMessage, $subject)
     {
-        $mail = new PHPMailer();
-        //$mail->SMTPDebug  = 3;
-        $mail->isSMTP();
-        $mail->Host       = 'Your mail server here';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'mail username here';
-        $mail->Password   = 'mail password or app password';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
+      $mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host       = $_ENV['MAIL_HOST'];
+ //$mail->SMTPDebug  = 3;
+$mail->SMTPAuth   = true;
+$mail->Username   = $_ENV['MAIL_USERNAME'];
+$mail->Password   = $_ENV['MAIL_PASSWORD'];
+$mail->SMTPSecure = $_ENV['MAIL_ENCRYPTION'];
+$mail->Port       = $_ENV['MAIL_PORT']; 
 
-        $mail->setFrom('mail@example.com', 'Name');
+$mail->setFrom($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']);
         $mail->addAddress($toEmail);
-        $mail->addReplyTo('mail@example.com', 'Name');
+        $mail->addReplyTo($_ENV['MAIL_REPLY_TO');
         $mail->isHTML(true);
         $mail->Subject = htmlspecialchars($subject);
         $mail->Body    = $htmlMessage;
@@ -67,7 +71,7 @@ $message = isset($_POST['message']) ? nl2br(htmlspecialchars(trim($_POST['messag
     $escapedSubject = htmlspecialchars($subject, ENT_QUOTES, 'UTF-8');
     
     
-     $adminEmail   = 'mhrsifat13@gmail.com';
+     $adminEmail   = $_ENV['ADMIN_EMAIL'];
     $adminSubject = 'New message from portfolio contact form';
     $adminBody    = "
         <strong>From:</strong> {$escapedName}<br>
