@@ -6,7 +6,7 @@ require_once __DIR__ . '/mailer/Exception.php';
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -27,7 +27,7 @@ $mail->Port       = $_ENV['MAIL_PORT'];
 
 $mail->setFrom($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']);
         $mail->addAddress($toEmail);
-        $mail->addReplyTo($_ENV['MAIL_REPLY_TO');
+        $mail->addReplyTo($_ENV['MAIL_REPLY_TO']);
         $mail->isHTML(true);
         $mail->Subject = htmlspecialchars($subject);
         $mail->Body    = $htmlMessage;
