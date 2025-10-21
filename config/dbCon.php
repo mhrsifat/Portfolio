@@ -1,7 +1,7 @@
 <?php
+require_once DIR . '/../vendor/autoload.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv = Dotenv\Dotenv::createImmutable(DIR . '/..');
 $dotenv->load();
 
 class Confi 
@@ -16,32 +16,28 @@ class Confi
 
     public function __construct()
     {
-        $this->host = $_ENV['DB_HOST'];
-        $this->db_name = $_ENV['DB_NAME'];
-        $this->username = $_ENV['DB_USER'];
-        $this->password = $_ENV['DB_PASS'];
+        // Use environment variables from .env file
+        $this->host     = $_ENV['DB_HOST'] ?? '127.0.0.1';
+        $this->db_name  = $_ENV['DB_DATABASE'] ?? 'portfolio';
+        $this->username = $_ENV['DB_USERNAME'] ?? 'root';
+        $this->password = $_ENV['DB_PASSWORD'] ?? '';
     }
 
     public function dbConnection()
     {
         $this->conn = null;
 
-        try 
-        {
+        try {
             $this->conn = new PDO(
                 "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4",
                 $this->username,
                 $this->password
             );
-        } 
-        catch (PDOException $exception) 
-        {
+        } catch (PDOException $exception) {
             $this->serverdown = true;
         }
 
         return $this->conn;
-    } 
+    }
 }
-
-
 ?>
