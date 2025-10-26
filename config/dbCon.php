@@ -1,7 +1,7 @@
 <?php
-require_once DIR . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(DIR . '/..');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 class Confi 
